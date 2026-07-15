@@ -76,14 +76,14 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 border-2 border-dashed border-red-200 rounded-2xl bg-red-50/50 w-full">
+    <div className="flex flex-col items-center gap-4 p-4 border-2 border-dashed border-stone-300 rounded-sm bg-[#FDFBF7] w-full">
       {!isRecording && !audioUrl && (
         <button
           type="button"
           onClick={startRecording}
           className="flex flex-col items-center gap-2 text-red-500 hover:text-red-600 transition-colors"
         >
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center shadow-inner hover:shadow-md transition-shadow">
+          <div className="w-16 h-16 bg-stone-100 border border-stone-200 rounded-full flex items-center justify-center shadow-inner hover:shadow-sm transition-shadow">
             <Mic className="w-8 h-8" />
           </div>
           <span className="font-semibold text-sm">הקלט ברכה קולית ישירות מכאן</span>
@@ -108,7 +108,7 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
       )}
 
       {audioUrl && !isRecording && (
-        <div className="flex items-center gap-4 w-full bg-white p-3 rounded-xl border border-red-100 shadow-sm flex-col sm:flex-row">
+        <div className="flex items-center gap-4 w-full bg-white p-3 rounded-sm border border-stone-200 shadow-sm flex-col sm:flex-row">
           <audio src={audioUrl} controls className="w-full sm:flex-1 h-12" />
           <button
             type="button"

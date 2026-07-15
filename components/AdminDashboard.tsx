@@ -33,20 +33,20 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+      <div className="flex justify-between items-center bg-[#FDFBF7] p-6 rounded-sm shadow-sm border border-stone-200">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">ניהול האתר</h2>
           <p className="text-gray-500">שליטה בנעילת האתר וצפייה במשפטים</p>
         </div>
         <button
           onClick={toggleLock}
-          className={`px-6 py-2 rounded-full font-bold text-white transition-colors ${isLocked ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
+          className={`px-6 py-2 rounded-sm font-bold text-white transition-colors border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none ${isLocked ? 'bg-red-500 border-red-600' : 'bg-green-500 border-green-600'}`}
         >
           {isLocked ? 'האתר נעול (לחץ לפתיחה)' : 'האתר פתוח (לחץ לנעילה)'}
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">
+      <div className="bg-[#FDFBF7] rounded-sm shadow-sm border border-stone-200 overflow-hidden overflow-x-auto">
         <table className="w-full text-right">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>

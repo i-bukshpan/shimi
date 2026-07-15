@@ -9,11 +9,10 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  background-image: radial-gradient(circle at top right, #C6F6D5, transparent 40%),
-                    radial-gradient(circle at bottom left, #E9D8FD, transparent 40%);
-  background-attachment: fixed;
   font-family: var(--font-varela), Arial, sans-serif;
+  /* Add paper texture */
+  background-color: #FAF6F0;
+  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
 }
 
 ::-webkit-scrollbar {

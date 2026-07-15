@@ -110,7 +110,7 @@ export default function BirthdayForm() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }} 
         animate={{ opacity: 1, scale: 1 }} 
-        className="bg-white p-8 rounded-3xl shadow-xl w-full text-center border border-green-100"
+        className="bg-[#FDFBF7] p-8 rounded-sm shadow-lg w-full text-center border border-stone-200"
       >
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle2 className="text-green-500 w-12 h-12" />
@@ -129,9 +129,9 @@ export default function BirthdayForm() {
             setFamilyGreetings([]);
             setShowFamilySection(false);
           }}
-          className="bg-gradient-to-r from-green-400 to-green-600 text-white px-8 py-3 rounded-full font-bold text-lg hover:shadow-lg transition-all transform hover:-translate-y-1"
+          className="mt-4 bg-orange-400 text-orange-950 border-2 border-orange-600 px-8 py-3 rounded-sm font-black text-lg shadow-[4px_4px_0px_0px_rgba(194,65,12,1)] hover:shadow-[2px_2px_0px_0px_rgba(194,65,12,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
         >
-          הוסף ברכה נוספת
+          הוסף ברכה נוספת 📝
         </button>
       </motion.div>
     );
@@ -152,7 +152,7 @@ export default function BirthdayForm() {
             placeholder="למשל: דוד יוסי, אמא ושירה..."
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="w-full border-2 border-purple-100 p-4 rounded-2xl focus:ring-4 focus:ring-purple-200 focus:border-purple-400 outline-none transition-all bg-white/50"
+            className="w-full border-b-2 border-stone-300 p-3 bg-transparent focus:border-amber-400 outline-none transition-all text-slate-800 placeholder-slate-400 font-medium text-lg"
           />
         </div>
 
@@ -167,7 +167,7 @@ export default function BirthdayForm() {
             placeholder="...כתבו כאן את המשפט או הברכה שלכם"
             value={textContent}
             onChange={(e) => setTextContent(e.target.value)}
-            className="w-full border-2 border-blue-100 p-4 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-400 outline-none transition-all bg-white/50 resize-none"
+            className="w-full border-2 border-stone-200 p-4 rounded-sm focus:ring-2 focus:ring-amber-200 focus:border-amber-400 outline-none transition-all bg-[#FDFBF7] shadow-inner resize-none text-slate-800 placeholder-slate-400 font-medium"
           />
         </div>
 
@@ -177,7 +177,7 @@ export default function BirthdayForm() {
               <Camera className="w-4 h-4 text-orange-500" />
               צלם תמונה או בחר קובץ (אופציונלי):
             </label>
-            <div className="relative border-2 border-dashed border-orange-200 rounded-2xl p-6 h-[172px] flex items-center justify-center hover:bg-orange-50/50 transition-colors group">
+            <div className="relative border-2 border-dashed border-stone-300 rounded-sm p-6 h-[172px] flex items-center justify-center hover:bg-stone-50 transition-colors group bg-[#FDFBF7]">
               <input
                 type="file"
                 accept="image/*,video/*"
@@ -185,7 +185,7 @@ export default function BirthdayForm() {
                 onChange={(e) => { setFile(e.target.files?.[0] || null); setAudioBlob(null); }}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               />
-              <div className="flex flex-col items-center gap-2 text-orange-600 group-hover:scale-105 transition-transform">
+              <div className="flex flex-col items-center gap-2 text-stone-500 group-hover:scale-105 transition-transform">
                 <Camera className="w-8 h-8" />
                 <span className="font-semibold text-sm text-center px-4">
                   {file ? file.name : "לחץ לצילום / בחירת קובץ"}
@@ -211,7 +211,7 @@ export default function BirthdayForm() {
           <button
             type="button"
             onClick={() => setShowFamilySection(true)}
-            className="w-full py-4 border-2 border-dashed border-pink-300 rounded-2xl text-pink-600 font-bold hover:bg-pink-50 transition-colors flex items-center justify-center gap-2"
+            className="w-full py-4 border-2 border-dashed border-stone-400 rounded-sm text-stone-700 font-bold bg-[#FDFBF7] hover:bg-stone-100 transition-colors flex items-center justify-center gap-2"
           >
             <Users className="w-5 h-5" />
             הוסף ברכות מהילדים / בת הזוג (אופציונלי)
@@ -235,17 +235,17 @@ export default function BirthdayForm() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="bg-pink-50 p-6 rounded-2xl border border-pink-100 space-y-4 relative"
+                  className="bg-white p-6 rounded-sm shadow-md border border-stone-200 space-y-4 relative"
                 >
                   <button
                     type="button"
                     onClick={() => removeFamilyGreeting(fg.id)}
-                    className="absolute top-4 left-4 text-pink-400 hover:text-pink-600 bg-white rounded-full p-1 shadow-sm"
+                    className="absolute top-4 left-4 text-rose-400 hover:text-rose-600 bg-stone-100 rounded-full p-1 shadow-sm"
                   >
                     <X className="w-4 h-4" />
                   </button>
 
-                  <h4 className="font-bold text-pink-800">מברך #{index + 1}</h4>
+                  <h4 className="font-bold text-slate-700">מברך #{index + 1}</h4>
                   
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-1">שם המברך/ת:</label>
@@ -255,7 +255,7 @@ export default function BirthdayForm() {
                       placeholder="למשל: יונתן"
                       value={fg.name}
                       onChange={(e) => updateFamilyGreeting(fg.id, 'name', e.target.value)}
-                      className="w-full border border-pink-200 p-3 rounded-xl outline-none focus:ring-2 focus:ring-pink-300"
+                      className="w-full border-b-2 border-stone-300 p-2 bg-transparent focus:border-amber-400 outline-none transition-all text-slate-800"
                     />
                   </div>
                   <div>
@@ -266,7 +266,7 @@ export default function BirthdayForm() {
                       placeholder="מזל טוב אבא!"
                       value={fg.text_content}
                       onChange={(e) => updateFamilyGreeting(fg.id, 'text_content', e.target.value)}
-                      className="w-full border border-pink-200 p-3 rounded-xl outline-none focus:ring-2 focus:ring-pink-300 resize-none"
+                      className="w-full border-2 border-stone-200 p-3 rounded-sm outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 resize-none bg-[#FDFBF7]"
                     />
                   </div>
                   <div>
@@ -280,7 +280,7 @@ export default function BirthdayForm() {
             <button
               type="button"
               onClick={addFamilyGreeting}
-              className="w-full py-3 bg-white border-2 border-pink-200 text-pink-600 rounded-xl font-bold hover:bg-pink-50 transition-colors flex items-center justify-center gap-2 shadow-sm"
+              className="w-full py-3 bg-[#FDFBF7] border-2 border-dashed border-stone-300 text-stone-600 rounded-sm font-bold hover:bg-stone-100 transition-colors flex items-center justify-center gap-2 shadow-sm"
             >
               <PlusCircle className="w-5 h-5" />
               הוסף מברך נוסף
@@ -292,7 +292,7 @@ export default function BirthdayForm() {
       <button
         type="submit"
         disabled={loading || !author || !textContent}
-        className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-2xl font-bold text-xl hover:shadow-lg transition-all transform hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none flex items-center justify-center gap-2 mt-8"
+        className="w-full bg-emerald-400 text-emerald-950 border-2 border-emerald-600 py-4 rounded-sm font-black text-xl shadow-[4px_4px_0px_0px_rgba(4,120,87,1)] hover:shadow-[2px_2px_0px_0px_rgba(4,120,87,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all disabled:opacity-50 disabled:transform-none disabled:shadow-[4px_4px_0px_0px_rgba(4,120,87,1)] flex items-center justify-center gap-2 mt-8"
       >
         {loading ? (
           <span className="animate-pulse">שומר ומעלה... (זה יכול לקחת רגע)</span>

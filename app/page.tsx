@@ -18,16 +18,20 @@ export default async function HomePage() {
   if (isLocked) {
     return (
       <main className="min-h-screen flex items-center justify-center p-4">
-        <div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl max-w-2xl w-full text-center border border-white/50">
-          <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Lock className="text-red-500 w-12 h-12" />
+        <div className="bg-[#FDFBF7] p-8 sm:p-12 shadow-lg max-w-2xl w-full text-center border border-stone-200 relative">
+          {/* Tape on the form */}
+          <div className="absolute -top-3 -left-4 w-20 h-6 bg-red-200/80 backdrop-blur-sm rotate-3 z-20 shadow-sm border border-white/40 mix-blend-multiply"></div>
+          <div className="absolute -bottom-3 -right-4 w-20 h-6 bg-red-200/80 backdrop-blur-sm -rotate-3 z-20 shadow-sm border border-white/40 mix-blend-multiply"></div>
+
+          <div className="w-24 h-24 bg-stone-100 border-2 border-stone-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+            <Lock className="text-red-700/80 w-12 h-12" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">הסיפור של שימי ננעל ונשמר בסוד! 🤫</h1>
-          <p className="text-xl text-gray-600 leading-relaxed">
+          <h1 className="text-4xl font-black text-slate-800 mb-6 drop-shadow-sm">הסיפור של שימי ננעל ונשמר בסוד! 🤫</h1>
+          <p className="text-xl text-slate-600 leading-relaxed font-medium">
             תודה לכל הדודים והבני דודים שהשתתפו והוסיפו משפטים וברכות. המילים וההקלטות שלכם עוברות עכשיו עיבוד מיוחד...
           </p>
-          <div className="mt-8 p-4 bg-purple-50 rounded-2xl border border-purple-100">
-            <p className="text-purple-800 font-bold text-xl">
+          <div className="mt-8 p-6 bg-[#FEF3C7] border border-[#FDE68A] shadow-sm transform rotate-1">
+            <p className="text-amber-800 font-bold text-xl">
               ניפגש ביום ההולדת לחשיפה הגדולה! 🎉
             </p>
           </div>

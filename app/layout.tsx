@@ -20,7 +20,7 @@ export default function RootLayout({
 }) { 
   return ( 
     <html lang="he" dir="rtl">
-      <body className={`${varelaRound.variable} font-sans antialiased min-h-screen bg-[#F0FDF4] text-gray-900 overflow-x-hidden`}>
+      <body className={`${varelaRound.variable} font-sans antialiased min-h-screen bg-[#FAF6F0] text-gray-900 overflow-x-hidden`}>
         {children}
       </body>
     </html>
