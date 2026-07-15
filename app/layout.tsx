@@ -9,6 +9,7 @@ const varelaRound = Varela_Round({
 }); 
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sus.ibsites.co.il'),
   title: 'יום הולדת לשימי!',
   description: 'כותבים שיר יום הולדת לשימי',
 };

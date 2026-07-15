@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { supabase } from '@/utils/supabase/client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle2, User, Type, UploadCloud, Camera, PlusCircle, Users, X } from 'lucide-react';
+import { Send, CheckCircle2, User, Type, UploadCloud, Camera, PlusCircle, Users, X, ImageIcon } from 'lucide-react';
 import AudioRecorder from './AudioRecorder';
 
 interface FamilyGreeting {
@@ -208,19 +208,41 @@ export default function BirthdayForm() {
               <Camera className="w-4 h-4 text-orange-500" />
               צלם תמונה או בחר קובץ (אופציונלי):
             </label>
-            <div className="relative border-2 border-dashed border-stone-300 rounded-sm p-6 h-[172px] flex items-center justify-center hover:bg-stone-50 transition-colors group bg-[#FDFBF7]">
-              <input
-                type="file"
-                accept="image/*,video/*"
-                onChange={handleFileChange}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-              />
-              <div className="flex flex-col items-center gap-2 text-stone-500 group-hover:scale-105 transition-transform">
-                <Camera className="w-8 h-8" />
-                <span className="font-semibold text-sm text-center px-4">
-                  {file ? file.name : "לחץ לצילום / בחירת קובץ"}
-                </span>
-              </div>
+            <div className="border-2 border-dashed border-stone-300 rounded-sm p-4 h-[172px] flex flex-col items-center justify-center bg-[#FDFBF7] gap-3">
+              {file ? (
+                <div className="flex flex-col items-center gap-2">
+                  <span className="font-semibold text-sm text-center px-4 text-stone-700">
+                    {file.name}
+                  </span>
+                  <button type="button" onClick={() => setFile(null)} className="text-red-500 hover:text-red-700 text-sm font-bold underline transition-colors">
+                    הסר קובץ
+                  </button>
+                </div>
+              ) : (
+                <div className="flex w-full gap-3 h-full pb-2">
+                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px]">
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      capture="environment"
+                      onChange={handleFileChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    />
+                    <Camera className="w-8 h-8 text-orange-500 mb-2" />
+                    <span className="text-sm font-bold text-stone-700">מצלמה 📸</span>
+                  </div>
+                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px]">
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      onChange={handleFileChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    />
+                    <ImageIcon className="w-8 h-8 text-blue-500 mb-2" />
+                    <span className="text-sm font-bold text-stone-700">גלריה 📁</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
