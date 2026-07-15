@@ -219,27 +219,38 @@ export default function BirthdayForm() {
                   </button>
                 </div>
               ) : (
-                <div className="flex w-full gap-3 h-full pb-2">
-                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px]">
+                <div className="flex w-full gap-2 h-full pb-2">
+                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px] overflow-hidden">
                     <input
                       type="file"
-                      accept="image/*,video/*"
+                      accept="image/*"
                       capture="environment"
                       onChange={handleFileChange}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     />
-                    <Camera className="w-8 h-8 text-orange-500 mb-2" />
-                    <span className="text-sm font-bold text-stone-700">מצלמה 📸</span>
+                    <Camera className="w-6 h-6 text-orange-500 mb-2" />
+                    <span className="text-xs font-bold text-stone-700 text-center leading-tight">צלם<br/>תמונה</span>
                   </div>
-                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px]">
+                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px] overflow-hidden">
+                    <input
+                      type="file"
+                      accept="video/*"
+                      capture="environment"
+                      onChange={handleFileChange}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    />
+                    <UploadCloud className="w-6 h-6 text-red-500 mb-2" />
+                    <span className="text-xs font-bold text-stone-700 text-center leading-tight">צלם<br/>וידאו</span>
+                  </div>
+                  <div className="relative flex-1 bg-white hover:bg-stone-50 rounded-sm flex flex-col items-center justify-center cursor-pointer transition-all border-2 border-stone-200 shadow-[2px_2px_0px_0px_rgba(214,211,209,1)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px] overflow-hidden">
                     <input
                       type="file"
                       accept="image/*,video/*"
                       onChange={handleFileChange}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     />
-                    <ImageIcon className="w-8 h-8 text-blue-500 mb-2" />
-                    <span className="text-sm font-bold text-stone-700">גלריה 📁</span>
+                    <ImageIcon className="w-6 h-6 text-blue-500 mb-2" />
+                    <span className="text-xs font-bold text-stone-700 text-center leading-tight">בחר<br/>מגלריה</span>
                   </div>
                 </div>
               )}
