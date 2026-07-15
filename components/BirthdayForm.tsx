@@ -35,10 +35,41 @@ export default function BirthdayForm() {
 
     if (!uploadError) {
       const { data } = supabase.storage.from('media').getPublicUrl(filePath);
-      return { url: data.publicUrl, type: blob.type.startsWith('image/') ? 'image' : 'audio' };
+      let typeStr = 'audio';
+      if (blob.type.startsWith('image/')) typeStr = 'image';
+      else if (blob.type.startsWith('video/')) typeStr = 'video';
+      return { url: data.publicUrl, type: typeStr };
     }
     console.error("Upload error:", uploadError);
     return { url: null, type: null };
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+    if (!selectedFile) {
+      setFile(null);
+      return;
+    }
+
+    if (selectedFile.type.startsWith('video/')) {
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      video.onloadedmetadata = () => {
+        URL.revokeObjectURL(video.src);
+        if (video.duration > 30) {
+          alert('הוידאו ארוך מדי! נא להעלות וידאו עד 30 שניות.');
+          e.target.value = ''; // Reset input
+          setFile(null);
+        } else {
+          setFile(selectedFile);
+          setAudioBlob(null);
+        }
+      };
+      video.src = URL.createObjectURL(selectedFile);
+    } else {
+      setFile(selectedFile);
+      setAudioBlob(null);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -181,8 +212,7 @@ export default function BirthdayForm() {
               <input
                 type="file"
                 accept="image/*,video/*"
-                capture="environment" // This triggers camera on mobile
-                onChange={(e) => { setFile(e.target.files?.[0] || null); setAudioBlob(null); }}
+                onChange={handleFileChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               />
               <div className="flex flex-col items-center gap-2 text-stone-500 group-hover:scale-105 transition-transform">
