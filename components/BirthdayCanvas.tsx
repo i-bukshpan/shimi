@@ -187,13 +187,18 @@ export default function BirthdayCanvas() {
           let py = c.position_y || Math.random() * 800;
           const shimiX = window.innerWidth / 2 - 160;
           const shimiY = 150;
-          const dx = px - shimiX;
-          const dy = py - shimiY;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 300) {
-            const angle = Math.atan2(dy, dx);
-            px = shimiX + Math.cos(angle) * 350;
-            py = shimiY + Math.sin(angle) * 350;
+          
+          const boxLeft = shimiX - 450;
+          const boxRight = shimiX + 320;
+          const boxTop = shimiY - 200;
+          const boxBottom = shimiY + 500;
+
+          if (px > boxLeft && px < boxRight && py > boxTop && py < boxBottom) {
+             const side = Math.floor(Math.random() * 4);
+             if (side === 0) py = boxTop - 100 - Math.random() * 50; 
+             else if (side === 1) py = boxBottom + 100 + Math.random() * 50; 
+             else if (side === 2) px = boxLeft - 450 - Math.random() * 100; 
+             else px = boxRight + 100 + Math.random() * 100; 
           }
 
           return {
@@ -248,18 +253,26 @@ export default function BirthdayCanvas() {
     (changes: NodeChange[]) => {
       const shimiX = window.innerWidth / 2 - 160;
       const shimiY = 150;
-      const protectedRadius = 350;
+      const boxLeft = shimiX - 450;
+      const boxRight = shimiX + 320;
+      const boxTop = shimiY - 200;
+      const boxBottom = shimiY + 500;
 
       const modifiedChanges = changes.map(change => {
-        if (change.type === 'position' && change.position && change.id !== 'shimi-main-node') {
-          const dx = change.position.x - shimiX;
-          const dy = change.position.y - shimiY;
-          const dist = Math.sqrt(dx*dx + dy*dy);
+        // Only trigger the snap-out when the user RELEASES the drag
+        if (change.type === 'position' && change.dragging === false && change.position && change.id !== 'shimi-main-node') {
+          let px = change.position.x;
+          let py = change.position.y;
           
-          if (dist < protectedRadius) {
-            const angle = Math.atan2(dy, dx) || Math.random() * Math.PI * 2;
-            change.position.x = shimiX + Math.cos(angle) * protectedRadius;
-            change.position.y = shimiY + Math.sin(angle) * protectedRadius;
+          if (px > boxLeft && px < boxRight && py > boxTop && py < boxBottom) {
+             const side = Math.floor(Math.random() * 4);
+             if (side === 0) py = boxTop - 100 - Math.random() * 50; 
+             else if (side === 1) py = boxBottom + 100 + Math.random() * 50; 
+             else if (side === 2) px = boxLeft - 450 - Math.random() * 100; 
+             else px = boxRight + 100 + Math.random() * 100; 
+             
+             change.position.x = px;
+             change.position.y = py;
           }
         }
         return change;
