@@ -110,6 +110,9 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
   if (decoration === 'balloons') cardStyle = "border-sky-300 shadow-[0_10px_40px_rgba(56,189,248,0.2)]";
   if (decoration === 'confetti') cardStyle = "border-purple-300 shadow-[0_10px_40px_rgba(168,85,247,0.3)]";
 
+  const hasMedia = (c.media_type === 'image' || c.media_type === 'video') && c.generated_media_url;
+  const widthClass = hasMedia ? "w-[450px]" : "w-80";
+
   return (
     <div className="relative group transition-all duration-300 hover:scale-105 hover:-translate-y-2 z-10 hover:z-50">      
       {/* Rich Decorations */}
@@ -130,7 +133,7 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
 
       {/* Main Card Container */}
       <div 
-        className={`bg-white/95 backdrop-blur-md rounded-2xl border-4 ${cardStyle} p-5 w-80 text-right relative overflow-hidden flex flex-col pointer-events-auto`}
+        className={`bg-white/95 backdrop-blur-md rounded-2xl border-4 ${cardStyle} p-5 ${widthClass} text-right relative overflow-hidden flex flex-col pointer-events-auto`}
         dir="rtl"
         onMouseDown={(e) => {
            if ((e.target as HTMLElement).tagName.toLowerCase() === 'input') {

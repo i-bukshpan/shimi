@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -14,7 +14,8 @@ import {
   Node,
   applyNodeChanges,
   NodeChange,
-  ReactFlowProvider
+  ReactFlowProvider,
+  ReactFlowInstance
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { supabase } from '@/utils/supabase/client';
@@ -38,6 +39,7 @@ export default function BirthdayCanvas() {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
+  const rfInstanceRef = useRef<ReactFlowInstance | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -47,13 +49,20 @@ export default function BirthdayCanvas() {
       .channel('public:ai_creations')
       .on('postgres_changes', { event: 'INSERT', schema: 'shimi_birthday', table: 'ai_creations' }, (payload) => {
         const newCreation = payload.new;
+        const x = newCreation.position_x || Math.random() * 500;
+        const y = newCreation.position_y || Math.random() * 500;
         const newNode: Node = {
           id: newCreation.id,
           type: 'cardNode',
-          position: { x: newCreation.position_x || Math.random() * 500, y: newCreation.position_y || Math.random() * 500 },
+          position: { x, y },
           data: { creation: newCreation },
         };
         setNodes((nds) => [...nds, newNode]);
+        
+        // Center the view on the new card
+        if (rfInstanceRef.current) {
+          rfInstanceRef.current.setCenter(x, y, { duration: 800, zoom: 1 });
+        }
         
         if (newCreation.parent_id) {
           setEdges((eds) => [...eds, {
@@ -275,6 +284,7 @@ export default function BirthdayCanvas() {
             onNodesChange={handleNodesChange}
             onEdgesChange={handleEdgesChange}
             onConnect={onConnect}
+            onInit={(instance) => rfInstanceRef.current = instance}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             nodesConnectable={false}

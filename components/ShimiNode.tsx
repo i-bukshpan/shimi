@@ -10,10 +10,10 @@ export default memo(function ShimiNode() {
         <img 
           src="/profile.jpg" 
           alt="Shimi" 
-          className="relative w-32 h-32 rounded-full object-cover border-4 border-amber-300 shadow-2xl bg-white"
+          className="relative w-64 h-64 rounded-full object-cover border-4 border-amber-300 shadow-2xl bg-white"
         />
       </div>
-      <h1 className="mt-4 text-4xl font-black text-white tracking-wider drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+      <h1 className="mt-6 text-7xl font-black text-white tracking-wider drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
         מזל טוב שימי!
       </h1>
       
