@@ -15,35 +15,16 @@ const EdgeDeleteButton = ({ id, target, labelX, labelY, defaultIcon }: { id: str
     else if (mediaType === 'text') icon = '💬';
   }
 
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // Remove from React Flow state
-    setEdges((edges) => edges.filter((e) => e.id !== id));
-    
-    // Attempt to remove from DB if it's a saved connection
-    if (!id.startsWith('edge-')) {
-      await supabase.from('card_connections').delete().eq('id', id);
-    }
-  };
-
   return (
     <EdgeLabelRenderer>
       <div
         style={{
           position: 'absolute',
           transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-          pointerEvents: 'all',
         }}
-        className="group relative bg-white rounded-full p-1.5 shadow-sm border border-stone-200 text-xl cursor-pointer hover:bg-red-50 transition-colors z-50"
+        className="bg-white rounded-full p-1.5 shadow-sm border border-stone-200 text-xl z-50 flex items-center justify-center"
       >
-        <span className="group-hover:opacity-0 transition-opacity duration-200 block drop-shadow-sm">{icon}</span>
-        <button 
-          onClick={handleDelete}
-          className="absolute inset-0 flex items-center justify-center bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-md"
-          title="מחק קשר"
-        >
-          ✕
-        </button>
+        <span className="block drop-shadow-sm">{icon}</span>
       </div>
     </EdgeLabelRenderer>
   );

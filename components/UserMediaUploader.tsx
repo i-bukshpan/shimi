@@ -158,7 +158,7 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
       setTimeout(() => {
         setIsOpen(false);
         resetState();
-      }, 3000);
+      }, 2000);
     } catch (err: any) {
       console.error(err);
       alert(`שגיאה בהעלאה: ${err.message}`);
