@@ -169,20 +169,31 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
         </div>
 
         {/* Interactions Toolbar */}
-        <div className="flex items-center justify-between mt-auto border-t-2 border-stone-100 pt-3 text-stone-500">
+        <div className="flex flex-col gap-3 mt-auto border-t-2 border-stone-100 pt-3 text-stone-500">
+          <div className="flex items-center justify-between">
+            <button 
+              onClick={toggleLike}
+              className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all ${hasLiked ? 'text-rose-500 bg-rose-50' : 'hover:bg-stone-100'}`}
+            >
+              <Heart className={`w-5 h-5 ${hasLiked ? 'fill-current scale-110' : ''} transition-transform`} />
+              <span className="text-sm font-bold">{likes.length > 0 ? likes.length : 'לייק'}</span>
+            </button>
+            <button 
+              onClick={(e) => { e.stopPropagation(); setShowCommentForm(!showCommentForm); }}
+              className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all ${showCommentForm ? 'text-indigo-500 bg-indigo-50' : 'hover:bg-stone-100'}`}
+            >
+              <span className="text-sm font-bold">{comments.length > 0 ? comments.length : ''} תגובה מהירה</span>
+              <MessageCircle className="w-5 h-5" />
+            </button>
+          </div>
           <button 
-            onClick={toggleLike}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${hasLiked ? 'text-rose-500 bg-rose-50' : 'hover:bg-stone-100'}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.dispatchEvent(new CustomEvent('open-uploader', { detail: { parentId: c.id } }));
+            }}
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-3 py-2 rounded-lg font-bold shadow-md hover:scale-[1.02] transition-transform w-full"
           >
-            <Heart className={`w-5 h-5 ${hasLiked ? 'fill-current scale-110' : ''} transition-transform`} />
-            <span className="text-sm font-bold">{likes.length > 0 ? likes.length : 'לייק'}</span>
-          </button>
-          <button 
-            onClick={(e) => { e.stopPropagation(); setShowCommentForm(!showCommentForm); }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${showCommentForm ? 'text-indigo-500 bg-indigo-50' : 'hover:bg-stone-100'}`}
-          >
-            <span className="text-sm font-bold">{comments.length > 0 ? comments.length : ''} תגובות</span>
-            <MessageCircle className="w-5 h-5" />
+            <span>🚀 הוסף חוויה/תמונה מחוברת</span>
           </button>
         </div>
 

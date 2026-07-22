@@ -54,6 +54,16 @@ export default function BirthdayCanvas() {
           data: { creation: newCreation },
         };
         setNodes((nds) => [...nds, newNode]);
+        
+        if (newCreation.parent_id) {
+          setEdges((eds) => [...eds, {
+            id: `edge-${newCreation.parent_id}-${newCreation.id}`,
+            source: newCreation.parent_id,
+            target: newCreation.id,
+            type: 'join_blessing',
+            animated: true,
+          }]);
+        }
       })
       .subscribe();
 
@@ -166,18 +176,32 @@ export default function BirthdayCanvas() {
       .from('card_connections')
       .select('*');
 
+    let initialEdges: Edge[] = [];
     if (connectionsData) {
-      const initialEdges: Edge[] = connectionsData.map((conn) => ({
+      initialEdges = connectionsData.map((conn) => ({
         id: conn.id,
         source: conn.source_id,
         target: conn.target_id,
         type: conn.edge_type,
         animated: true,
       }));
-      setEdges(initialEdges);
-    } else {
-      setEdges([]);
     }
+
+    if (creationsData) {
+      creationsData.forEach((c) => {
+        if (c.parent_id) {
+          initialEdges.push({
+            id: `edge-${c.parent_id}-${c.id}`,
+            source: c.parent_id,
+            target: c.id,
+            type: 'join_blessing',
+            animated: true,
+          });
+        }
+      });
+    }
+
+    setEdges(initialEdges);
   };
 
   const handleNodesChange = useCallback(

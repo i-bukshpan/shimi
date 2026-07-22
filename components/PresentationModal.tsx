@@ -25,8 +25,6 @@ export default function PresentationModal({ nodes, edges, onExit }: { nodes: Nod
     const visited = new Set<string>();
     const newPath: Node[] = [];
     
-    const rootNode = nodes.find(n => n.id === 'shimi-main-node') || nodes[0];
-    
     const dfs = (nodeId: string) => {
       if (visited.has(nodeId)) return;
       visited.add(nodeId);
@@ -40,8 +38,17 @@ export default function PresentationModal({ nodes, edges, onExit }: { nodes: Nod
       }
     };
 
-    dfs(rootNode.id);
+    // Explicitly iterate over Parent cards first (Main node + cards without parent_id)
+    const parentNodes = nodes.filter(n => 
+      n.id === 'shimi-main-node' || 
+      (n.type === 'cardNode' && !(n.data.creation as any)?.parent_id)
+    );
 
+    for (const pNode of parentNodes) {
+      dfs(pNode.id);
+    }
+
+    // Fallback for any disconnected/floating nodes that somehow weren't caught
     for (const node of nodes) {
       if (!visited.has(node.id)) {
         dfs(node.id);
