@@ -244,15 +244,13 @@ export default function BirthdayCanvas() {
     [setEdges]
   );
 
-  const onEdgesDelete = useCallback(
-    (edgesToDelete: Edge[]) => {
-      edgesToDelete.forEach((edge) => {
-        if (!edge.id.startsWith('edge-')) {
-          supabase.from('card_connections').delete().eq('id', edge.id).then();
-        }
-      });
+  const handleEdgesChange = useCallback(
+    (changes: any[]) => {
+      // Prevent any edge from being deleted by filtering out 'remove' events
+      const filteredChanges = changes.filter(c => c.type !== 'remove');
+      onEdgesChange(filteredChanges);
     },
-    []
+    [onEdgesChange]
   );
 
   useEffect(() => {
@@ -275,8 +273,7 @@ export default function BirthdayCanvas() {
             nodes={nodes}
             edges={edges}
             onNodesChange={handleNodesChange}
-            onEdgesChange={onEdgesChange}
-            onEdgesDelete={onEdgesDelete}
+            onEdgesChange={handleEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
