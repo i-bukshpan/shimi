@@ -1,30 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #F0FDF4; /* Light green tint */
-  --foreground: #1A202C;
+@layer base {
+  body {
+    font-family: 'Varela Round', sans-serif;
+    @apply bg-[#FAF6F0] text-slate-800;
+  }
 }
 
-body {
-  color: var(--foreground);
-  font-family: var(--font-varela), Arial, sans-serif;
-  /* Add paper texture */
-  background-color: #FAF6F0;
-  background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-}
-
+/* Custom scrollbar for chat and feed */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #A0AEC0;
+  background: #cbd5e1;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #718096;
+  background: #94a3b8;
 }
