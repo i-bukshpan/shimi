@@ -1,6 +1,7 @@
 import BirthdayCanvas from "@/components/BirthdayCanvas";
 import Sidebar from "@/components/Sidebar";
 import UserMediaUploader from "@/components/UserMediaUploader";
+import OnlineIndicator from "@/components/OnlineIndicator";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <section className="flex-1 h-full relative z-10 w-full">
         {/* The React Flow Canvas */}
         <BirthdayCanvas />
+        <OnlineIndicator />
       </section>
 
       {/* Global Floating Components */}
