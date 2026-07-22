@@ -281,6 +281,8 @@ export default function BirthdayCanvas() {
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
             nodesConnectable={false}
+            edgesFocusable={false}
+            deleteKeyCode={null}
             connectionLineType={'smoothstep' as any}
             connectionLineStyle={{ stroke: '#ECC94B', strokeWidth: 4, filter: 'drop-shadow(0 0 4px rgba(236,201,75,0.6))' }}
             fitView
