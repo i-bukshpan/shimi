@@ -1,13 +1,43 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatWindow from './ChatWindow';
 import UserMediaUploader from './UserMediaUploader';
-import { Play, Sparkles, X, MessageCircle } from 'lucide-react';
+import { Play, Sparkles, X, MessageCircle, Users } from 'lucide-react';
+import { supabase } from '@/utils/supabase/client';
 
 export default function Sidebar() {
   const [activeTab, setActiveTab] = useState<'ai' | 'manual'>('ai');
   const [isOpen, setIsOpen] = useState(false);
+  const [onlineCount, setOnlineCount] = useState(1);
+
+  useEffect(() => {
+    const room = supabase.channel('online-users');
+    let userId = localStorage.getItem('shimi_device_id');
+    if (!userId) {
+       userId = crypto.randomUUID();
+       localStorage.setItem('shimi_device_id', userId);
+    }
+
+    room
+      .on('presence', { event: 'sync' }, () => {
+        const state = room.presenceState();
+        const count = Object.keys(state).length;
+        setOnlineCount(count > 0 ? count : 1);
+      })
+      .subscribe(async (status) => {
+        if (status === 'SUBSCRIBED') {
+          await room.track({
+            online_at: new Date().toISOString(),
+            user: userId,
+          });
+        }
+      });
+
+    return () => {
+      supabase.removeChannel(room);
+    };
+  }, []);
 
   return (
     <>
@@ -41,11 +71,15 @@ export default function Sidebar() {
           
           {/* Top Header Row with Title and Play Button */}
           <div className="p-4 pb-2 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-1">
               <h2 className="font-black text-xl text-amber-900 drop-shadow-sm flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-amber-500" />
                 העוזר למסיבה 🎉
               </h2>
+              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-100/80 w-fit px-2 py-0.5 rounded-full border border-emerald-200">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]"></div>
+                {onlineCount} מחוברים עכשיו
+              </div>
             </div>
             
             <div className="flex items-center gap-2">

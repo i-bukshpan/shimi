@@ -74,6 +74,21 @@ export default function BirthdayCanvas() {
           }]);
         }
       })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'shimi_birthday', table: 'ai_creations' }, (payload) => {
+        setNodes((nds) => nds.map((n) => {
+          if (n.id === payload.new.id) {
+            return {
+              ...n,
+              position: {
+                x: payload.new.position_x || n.position.x,
+                y: payload.new.position_y || n.position.y
+              },
+              data: { ...n.data, creation: payload.new }
+            };
+          }
+          return n;
+        }));
+      })
       .subscribe();
 
     // Subscribe to connections
@@ -166,16 +181,32 @@ export default function BirthdayCanvas() {
     if (creationsData) {
       initialNodes = [
         ...initialNodes,
-        ...creationsData.map((c) => ({
-          id: c.id,
-          type: 'cardNode',
-          position: { x: c.position_x || Math.random() * 800, y: c.position_y || Math.random() * 800 },
-          data: { 
-            creation: c,
-            likes: likesData ? likesData.filter(l => l.card_id === c.id) : [],
-            comments: commentsData ? commentsData.filter(cm => cm.card_id === c.id) : []
-          },
-        }))
+        ...creationsData.map((c) => {
+          // Adjust initial positions so they don't overlap Shimi
+          let px = c.position_x || Math.random() * 800;
+          let py = c.position_y || Math.random() * 800;
+          const shimiX = window.innerWidth / 2 - 160;
+          const shimiY = 150;
+          const dx = px - shimiX;
+          const dy = py - shimiY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 300) {
+            const angle = Math.atan2(dy, dx);
+            px = shimiX + Math.cos(angle) * 350;
+            py = shimiY + Math.sin(angle) * 350;
+          }
+
+          return {
+            id: c.id,
+            type: 'cardNode',
+            position: { x: px, y: py },
+            data: { 
+              creation: c,
+              likes: likesData ? likesData.filter(l => l.card_id === c.id) : [],
+              comments: commentsData ? commentsData.filter(cm => cm.card_id === c.id) : []
+            },
+          };
+        })
       ];
     }
     setNodes(initialNodes);
@@ -215,10 +246,29 @@ export default function BirthdayCanvas() {
 
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      setNodes((nds) => applyNodeChanges(changes, nds));
+      const shimiX = window.innerWidth / 2 - 160;
+      const shimiY = 150;
+      const protectedRadius = 350;
+
+      const modifiedChanges = changes.map(change => {
+        if (change.type === 'position' && change.position && change.id !== 'shimi-main-node') {
+          const dx = change.position.x - shimiX;
+          const dy = change.position.y - shimiY;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          
+          if (dist < protectedRadius) {
+            const angle = Math.atan2(dy, dx) || Math.random() * Math.PI * 2;
+            change.position.x = shimiX + Math.cos(angle) * protectedRadius;
+            change.position.y = shimiY + Math.sin(angle) * protectedRadius;
+          }
+        }
+        return change;
+      });
+
+      setNodes((nds) => applyNodeChanges(modifiedChanges, nds));
       
       // Handle drag ends to save new positions to DB
-      changes.forEach((change) => {
+      modifiedChanges.forEach((change) => {
         if (change.type === 'position' && !change.dragging && change.position) {
           supabase
             .from('ai_creations')
