@@ -10,10 +10,6 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@remotion/bundler": "^4.0.495",
-    "@remotion/cli": "^4.0.495",
-    "@remotion/google-fonts": "^4.0.495",
-    "@remotion/renderer": "^4.0.495",
     "@supabase/supabase-js": "^2.110.5",
     "@xyflow/react": "^12.11.2",
     "canvas-confetti": "^1.9.4",
@@ -23,7 +19,6 @@
     "next": "^16.2.10",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "remotion": "^4.0.495",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
