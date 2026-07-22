@@ -256,8 +256,8 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
         )}
       </div>
 
-      <Handle type="target" position={Position.Top} isConnectable={isConnectable} className="!w-6 !h-6 !bg-[#FAF6F0] !border-4 !border-indigo-500 !z-50 transition-transform hover:scale-125 shadow-lg !rounded-full" />
-      <Handle type="source" position={Position.Bottom} isConnectable={isConnectable} className="!w-6 !h-6 !bg-[#FAF6F0] !border-4 !border-pink-500 !z-50 transition-transform hover:scale-125 shadow-lg !rounded-full" />
+      <Handle type="target" position={Position.Top} isConnectable={false} className="!opacity-0" />
+      <Handle type="source" position={Position.Bottom} isConnectable={false} className="!opacity-0" />
     </div>
   );
 });
