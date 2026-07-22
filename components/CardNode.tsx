@@ -150,8 +150,8 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
         )}
         
         {c.media_type === 'video' && c.generated_media_url && (
-          <div className="relative mb-4 rounded-xl overflow-hidden ring-4 ring-stone-100 shadow-inner bg-black">
-            <video src={c.generated_media_url} className="w-full h-56 object-cover" controls />
+          <div className="relative mb-4 rounded-xl overflow-hidden ring-4 ring-stone-100 shadow-inner bg-black flex justify-center items-center">
+            <video src={c.generated_media_url} className="w-full max-h-[500px] object-contain" controls />
           </div>
         )}
 
