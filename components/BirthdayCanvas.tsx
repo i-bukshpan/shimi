@@ -35,8 +35,8 @@ const edgeTypes = {
 };
 
 export default function BirthdayCanvas() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
 
   useEffect(() => {
