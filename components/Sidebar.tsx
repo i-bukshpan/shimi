@@ -49,6 +49,15 @@ export default function Sidebar() {
             </div>
             
             <div className="flex items-center gap-2">
+              <button 
+                onClick={() => window.dispatchEvent(new CustomEvent('play-presentation'))}
+                className="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 text-xs font-bold py-1.5 px-3 rounded-lg shadow-sm transition-transform hover:scale-105 flex items-center gap-1 border border-indigo-200"
+                title="נגן מצגת קולנועית"
+              >
+                <Play className="w-3 h-3 fill-current" />
+                מצגת
+              </button>
+              
               {/* Close button for mobile */}
               <button 
                 onClick={() => setIsOpen(false)}

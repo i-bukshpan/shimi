@@ -46,26 +46,7 @@ export default function AdminDashboard() {
     if (settingsData) setIsLocked(settingsData.is_locked);
   };
 
-  const [isRenderingVideo, setIsRenderingVideo] = useState(false);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const handleRenderVideo = async () => {
-    setIsRenderingVideo(true);
-    setVideoUrl(null);
-    try {
-      const res = await fetch("/api/render-video", { method: "POST" });
-      const data = await res.json();
-      if (res.ok) {
-        setVideoUrl(data.url);
-      } else {
-        alert("שגיאה ביצירת הסרטון: " + data.error);
-      }
-    } catch (err) {
-      alert("שגיאת רשת בעת יצירת הסרטון");
-    } finally {
-      setIsRenderingVideo(false);
-    }
-  };
 
   const handleLogin = async () => {
     setIsLoadingAuth(true);
@@ -166,29 +147,7 @@ export default function AdminDashboard() {
           </div>
         </header>
 
-        {/* Video Rendering Section */}
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-8 rounded-2xl shadow-lg flex flex-col items-center justify-center text-white gap-4 text-center">
-          <h2 className="text-2xl font-bold">🎬 יצירת סרטון החגיגה המלא</h2>
-          <p className="opacity-90 max-w-lg">המערכת תיקח את כל הברכות, התמונות, וההקלטות, ותהפוך אותן לסרטון אחד רציף עם מוזיקה, קריינות ואנימציות.</p>
-          
-          {isRenderingVideo ? (
-            <div className="bg-white/20 px-6 py-3 rounded-full animate-pulse mt-4">
-              מכין את הסרטון של שימי... 🚀 (זה עשוי לקחת כמה דקות)
-            </div>
-          ) : videoUrl ? (
-            <a href={videoUrl} download="shimi_birthday_video.mp4" className="mt-4 bg-green-500 hover:bg-green-400 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105 flex items-center gap-2">
-              <Download className="w-5 h-5" />
-              הורד סרטון
-            </a>
-          ) : (
-            <button 
-              onClick={handleRenderVideo}
-              className="mt-4 bg-white text-indigo-600 hover:bg-indigo-50 font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:scale-105"
-            >
-              צור והורד את הסרטון המלא של שימי 🎬
-            </button>
-          )}
-        </div>
+
 
         <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
           <table className="w-full text-right" dir="rtl">
