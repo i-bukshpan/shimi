@@ -14,6 +14,12 @@ export default function PresentationModal({ nodes, edges, onExit }: { nodes: Nod
 
   // DFS Traversal to respect Parent -> Child relationships
   useEffect(() => {
+    if (bgMusicRef.current) {
+      bgMusicRef.current.volume = 0.3;
+    }
+  }, []);
+
+  useEffect(() => {
     if (nodes.length === 0) return;
 
     const visited = new Set<string>();
@@ -184,8 +190,7 @@ export default function PresentationModal({ nodes, edges, onExit }: { nodes: Nod
         ref={bgMusicRef}
         src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=happy-birthday-113974.mp3" 
         autoPlay 
-        loop 
-        volume={0.3} 
+        loop
       />
     </>
   );

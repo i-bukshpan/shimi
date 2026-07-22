@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useReactFlow, Node, Edge } from '@xyflow/react';
 import { X } from 'lucide-react';
 
@@ -13,6 +13,14 @@ export default function PresentationShow({ nodes, edges, onExit }: { nodes: Node
   // For now, we'll just visit each node in the array order for demonstration,
   // but prioritize targets of the current node if they exist.
 
+  const [progress, setProgress] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.05;
+    }
+  }, []);
   const [path, setPath] = useState<Node[]>([]);
 
   useEffect(() => {
@@ -101,11 +109,10 @@ export default function PresentationShow({ nodes, edges, onExit }: { nodes: Node
       
       {/* Background Music Player */}
       <audio 
+        ref={audioRef}
         src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=happy-birthday-113974.mp3" 
         autoPlay 
         loop 
-        // Audio ducking is done via low volume here, or we can control it dynamically
-        volume={0.05} 
       />
     </div>
   );

@@ -218,9 +218,9 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
       <AnimatePresence>
         {(isOpen || inline) && (
           <motion.div 
-            initial={inline ? false : { opacity: 0, y: 50, scale: 0.95 }}
-            animate={inline ? false : { opacity: 1, y: 0, scale: 1 }}
-            exit={inline ? false : { opacity: 0, y: 50, scale: 0.95 }}
+            initial={inline ? undefined : { opacity: 0, y: 50, scale: 0.95 }}
+            animate={inline ? undefined : { opacity: 1, y: 0, scale: 1 }}
+            exit={inline ? undefined : { opacity: 0, y: 50, scale: 0.95 }}
             className={inline 
               ? "flex flex-col bg-transparent h-full w-full overflow-hidden" 
               : "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col bg-[#FCF8F2] rounded-2xl shadow-2xl border border-[#ECC94B]/30 h-[80vh] max-h-[700px] w-[calc(100%-32px)] sm:w-[450px] overflow-hidden"
