@@ -11,7 +11,7 @@ export default function AboutModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-[90px] left-4 sm:bottom-auto sm:top-[80px] sm:left-6 z-[40] bg-gradient-to-r from-amber-400 to-orange-400 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-white flex items-center gap-2 animate-bounce"
+        className="fixed bottom-[90px] left-4 sm:bottom-6 sm:left-6 sm:top-auto z-[40] bg-gradient-to-r from-amber-400 to-orange-400 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-white flex items-center gap-2 animate-bounce"
         title="מה עושים כאן?"
       >
         <Info className="w-5 h-5" />
