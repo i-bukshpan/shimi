@@ -217,9 +217,9 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
       )}
 
       {/* Body */}
-      <div className="p-6 flex-1 overflow-y-auto space-y-6 flex flex-col">
+      <div className="p-6 flex-1 overflow-y-auto flex flex-col gap-6">
         {success ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="flex flex-col items-center justify-center py-12 text-center h-full">
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-green-500 mb-4">
               <CheckCircle2 className="w-20 h-20" />
             </motion.div>
@@ -228,107 +228,98 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
           </div>
         ) : (
           <>
-            <div className="space-y-4 pt-4">
-              {!file && (
-                <>
-                  <div className="relative">
-                    <textarea
-                      placeholder="כתבו כאן את הברכה שלכם..."
-                      value={blessingText}
-                      onChange={(e) => setBlessingText(e.target.value)}
-                      className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all resize-none h-24"
-                      dir="rtl"
-                    />
-                    {blessingText.trim().length > 0 && (
-                      <button 
-                        onClick={handleNikud} 
-                        disabled={isNikkuding}
-                        className="absolute bottom-3 left-3 bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-indigo-200 transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-50"
-                        title="ניקוד אוטומטי"
-                      >
-                        {isNikkuding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-indigo-600" />}
-                        נקד
-                      </button>
-                    )}
-                  </div>
-                  
-                  <div className="flex flex-col gap-1">
-                    <label className="text-sm font-bold text-stone-600 px-1">קישוט מסביב לברכה:</label>
-                    <select 
-                      value={decoration}
-                      onChange={(e) => setDecoration(e.target.value)}
-                      className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all text-stone-800"
-                      dir="rtl"
-                    >
-                      <option value="none">ללא</option>
-                      <option value="balloons">בלונים מעופפים 🎈</option>
-                      <option value="candles">נרות מהבהבים 🕯️</option>
-                      <option value="confetti">קונפטי לחצן 🎉</option>
-                      <option value="cake">עוגת יום הולדת 🎂</option>
-                    </select>
-                  </div>
-                </>
-              )}
+            <div className="flex flex-col gap-4 flex-1 min-h-0">
+              <div className="relative flex-1 flex flex-col min-h-[120px]">
+                <textarea
+                  placeholder="כתבו כאן את הברכה שלכם..."
+                  value={blessingText}
+                  onChange={(e) => setBlessingText(e.target.value)}
+                  className="w-full h-full border-2 border-stone-200 rounded-xl px-4 py-3 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all resize-none flex-1 text-lg text-stone-800 shadow-inner"
+                  dir="rtl"
+                />
+                {blessingText.trim().length > 0 && (
+                  <button 
+                    onClick={handleNikud} 
+                    disabled={isNikkuding}
+                    className="absolute bottom-3 left-3 bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-indigo-200 transition-colors flex items-center gap-1.5 shadow-sm disabled:opacity-50"
+                    title="ניקוד אוטומטי"
+                  >
+                    {isNikkuding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-indigo-600" />}
+                    נקד
+                  </button>
+                )}
+              </div>
+              
+              <div className="flex flex-col gap-1 shrink-0">
+                <label className="text-sm font-bold text-stone-600 px-1">קישוט מסביב לברכה:</label>
+                <select 
+                  value={decoration}
+                  onChange={(e) => setDecoration(e.target.value)}
+                  className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all text-stone-800 font-medium"
+                  dir="rtl"
+                >
+                  <option value="none">ללא</option>
+                  <option value="balloons">בלונים מעופפים 🎈</option>
+                  <option value="candles">נרות מהבהבים 🕯️</option>
+                  <option value="confetti">קונפטי לחצן 🎉</option>
+                  <option value="cake">עוגת יום הולדת 🎂</option>
+                </select>
+              </div>
             </div>
 
-            {!file ? (
-              <>
-                <div className="grid grid-cols-2 gap-3 mt-4">
+            {/* Media selection buttons */}
+            <div className="shrink-0 flex flex-col gap-4">
+              {!file ? (
+                <div className="grid grid-cols-2 gap-3 mt-2">
                   <input type="file" accept="image/*" capture="environment" ref={photoInputRef} onChange={(e) => handleFileChange(e, "image")} className="hidden" />
-                  <button onClick={() => photoInputRef.current?.click()} className="flex flex-col items-center justify-center gap-2 bg-rose-50 text-rose-600 p-4 rounded-2xl hover:bg-rose-100 transition-colors border border-rose-200">
-                    <Camera className="w-8 h-8" />
+                  <button onClick={() => photoInputRef.current?.click()} className="flex flex-col items-center justify-center gap-2 bg-rose-50 text-rose-600 p-4 rounded-2xl hover:bg-rose-100 transition-colors border border-rose-200 shadow-sm">
+                    <Camera className="w-7 h-7" />
                     <span className="font-bold text-sm">צלם תמונה</span>
                   </button>
 
                   <input type="file" accept="video/*" capture="environment" ref={videoInputRef} onChange={(e) => handleFileChange(e, "video")} className="hidden" />
-                  <button onClick={() => videoInputRef.current?.click()} className="flex flex-col items-center justify-center gap-2 bg-indigo-50 text-indigo-600 p-4 rounded-2xl hover:bg-indigo-100 transition-colors border border-indigo-200">
-                    <Video className="w-8 h-8" />
+                  <button onClick={() => videoInputRef.current?.click()} className="flex flex-col items-center justify-center gap-2 bg-indigo-50 text-indigo-600 p-4 rounded-2xl hover:bg-indigo-100 transition-colors border border-indigo-200 shadow-sm">
+                    <Video className="w-7 h-7" />
                     <span className="font-bold text-sm">צלם סרטון</span>
                   </button>
 
                   <button 
                     onClick={isRecording ? stopAudioRecording : startAudioRecording} 
-                    className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-colors border ${isRecording ? 'bg-red-100 text-red-600 border-red-300 animate-pulse' : 'bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100'}`}
+                    className={`flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-colors border shadow-sm ${isRecording ? 'bg-red-100 text-red-600 border-red-300 animate-pulse' : 'bg-emerald-50 text-emerald-600 border-emerald-200 hover:bg-emerald-100'}`}
                   >
-                    {isRecording ? <Square className="w-8 h-8 fill-current" /> : <Mic className="w-8 h-8" />}
-                    <span className="font-bold text-sm">{isRecording ? formatTime(recordingTime) : "הקלט ברכה"}</span>
+                    {isRecording ? <Square className="w-7 h-7 fill-current" /> : <Mic className="w-7 h-7" />}
+                    <span className="font-bold text-sm">{isRecording ? formatTime(recordingTime) : "הקלט קול"}</span>
                   </button>
 
                   <input type="file" accept="image/*,video/*,audio/*" ref={fileInputRef} onChange={handleGalleryChange} className="hidden" />
-                  <button onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center justify-center gap-2 bg-stone-50 text-stone-600 p-4 rounded-2xl hover:bg-stone-100 transition-colors border border-stone-200">
-                    <Upload className="w-8 h-8" />
-                    <span className="font-bold text-sm">העלה מהגלריה</span>
+                  <button onClick={() => fileInputRef.current?.click()} className="flex flex-col items-center justify-center gap-2 bg-stone-50 text-stone-600 p-4 rounded-2xl hover:bg-stone-100 transition-colors border border-stone-200 shadow-sm">
+                    <Upload className="w-7 h-7" />
+                    <span className="font-bold text-sm">העלה קובץ</span>
                   </button>
                 </div>
-                
-                {blessingText.trim().length > 0 && (
-                  <div className="mt-4 pb-8">
-                    <button 
-                      onClick={handleUpload} 
-                      disabled={isUploading || !authorName} 
-                      className="w-full bg-stone-800 text-white py-3 rounded-xl font-bold shadow-md hover:bg-stone-700 transition-colors flex justify-center items-center gap-2 disabled:opacity-50"
-                    >
-                      {isUploading ? <Loader2 className="w-5 h-5 animate-spin" /> : "שלח ברכה הכללית"}
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="flex flex-col items-center gap-4 bg-stone-50 p-4 rounded-2xl border border-stone-200 mb-8">
-                {mediaType === "image" && <img src={previewUrl} className="w-full max-h-48 object-contain rounded-xl bg-black/5" />}
-                {mediaType === "video" && <video src={previewUrl} controls className="w-full max-h-48 rounded-xl bg-black/5" />}
-                {mediaType === "audio" && <audio src={previewUrl} controls className="w-full" />}
-                
-                <div className="flex gap-2 w-full">
-                  <button onClick={resetState} disabled={isUploading} className="flex-1 bg-white border border-stone-300 text-stone-600 py-2 rounded-xl font-bold hover:bg-stone-100 transition-colors">
-                    החלף קובץ
-                  </button>
-                  <button onClick={handleUpload} disabled={isUploading || !authorName} className="flex-[2] bg-gradient-to-r from-rose-500 to-pink-500 text-white py-2 rounded-xl font-bold shadow-md hover:opacity-90 transition-opacity flex justify-center items-center gap-2 disabled:opacity-50">
-                    {isUploading ? <Loader2 className="w-5 h-5 animate-spin" /> : "שלח ללוח!"}
+              ) : (
+                <div className="flex flex-col items-center gap-4 bg-stone-50 p-4 rounded-2xl border border-stone-200">
+                  {mediaType === "image" && <img src={previewUrl} className="w-full max-h-48 object-contain rounded-xl bg-black/5" />}
+                  {mediaType === "video" && <video src={previewUrl} controls className="w-full max-h-48 rounded-xl bg-black/5" />}
+                  {mediaType === "audio" && <audio src={previewUrl} controls className="w-full" />}
+                  
+                  <button onClick={() => { setFile(null); setPreviewUrl(""); setMediaType(""); }} disabled={isUploading} className="w-full bg-white border border-stone-300 text-stone-600 py-2 rounded-xl font-bold hover:bg-stone-100 transition-colors shadow-sm">
+                    הסר קובץ מצורף
                   </button>
                 </div>
+              )}
+
+              {/* ALWAYS SHOW SUBMIT BUTTON */}
+              <div className="mt-2 pb-2">
+                <button 
+                  onClick={handleUpload} 
+                  disabled={isUploading || !authorName || (!file && !blessingText.trim())} 
+                  className="w-full bg-gradient-to-r from-rose-500 to-pink-500 text-white py-4 rounded-2xl font-bold text-lg shadow-md hover:opacity-90 transition-all flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isUploading ? <Loader2 className="w-6 h-6 animate-spin" /> : "שגר ללוח הברכות!"}
+                </button>
               </div>
-            )}
+            </div>
           </>
         )}
       </div>

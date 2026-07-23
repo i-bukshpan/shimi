@@ -14,7 +14,7 @@ type Message = {
   };
   ctas?: {
     action: string;
-    media_type: "image" | "audio" | "video" | "text";
+    media_type: "image" | "audio" | "video" | "text" | "reply";
     prompt: string;
     clean_blessing?: string;
   }[];
@@ -31,7 +31,7 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
     {
       id: "init",
       role: "bot",
-      content: "היי! ברוכים הבאים למסיבה של שימי! 🎉 אני העוזר האישי שלכם כאן לאלבום הברכות.\nכדי שנוכל להתחיל, איך קוראים לכם ואיך אתם קשורים לשימי? \n\nאם בא לכם כיוון, תוכלו לבחור:\n1️⃣ ברכה קצרה ומרגשת (מרפואה ועד נחת)\n2️⃣ סיפור מצחיק או בדיחה משפחתית\n3️⃣ איחול של גיבור-על חזק ומנצח!\n\n(או פשוט תכתבו לי מה שבא לכם בתיבה למטה👇)"
+      content: "היי! ברוכים הבאים למסיבה של שימי! 🎉 אני כאן כדי לעזור לכם לכתוב ברכה מדהימה.\nרק תגידו לי מה בא לכם להגיד או שתבחרו את אחד הרעיונות למטה 👇"
     }
   ]);
   const [input, setInput] = useState("");
@@ -50,8 +50,34 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
   }, [messages, isOpen]);
 
   useEffect(() => {
-    setAuthorName(localStorage.getItem("shimi_author_name") || "");
-    const handleNameUpdate = () => setAuthorName(localStorage.getItem("shimi_author_name") || "");
+    const savedName = localStorage.getItem("shimi_author_name") || "";
+    setAuthorName(savedName);
+    
+    if (savedName) {
+      setMessages([{
+        id: "init",
+        role: "bot",
+        content: `היי ${savedName}! ברוכים הבאים למסיבה של שימי! 🎉\nאני כאן כדי לכתוב איתך את הברכה המושלמת ואפילו ליצור תמונות או שירים!\n\nאיזה סגנון ברכה בא לך?\n1️⃣ קצרה ומרגשת (בריאות, רפואה, נחת)\n2️⃣ חזקה ומעצימה (לשימי הגיבור שמנצח הכל)\n3️⃣ מצחיקה ואישית (זיכרון מתוק)\n\nפשוט תכתוב לי כאן למטה מה הכיוון, ואני אנסח לך 3 הצעות מדהימות לבחירה! 👇`
+      }]);
+    }
+
+    const handleNameUpdate = () => {
+      const updatedName = localStorage.getItem("shimi_author_name") || "";
+      setAuthorName(updatedName);
+      if (updatedName) {
+        setMessages(prev => {
+          if (prev.length === 1 && prev[0].id === "init") {
+            return [{
+              id: "init",
+              role: "bot",
+              content: `היי ${updatedName}! ברוכים הבאים למסיבה של שימי! 🎉\nאני כאן כדי לכתוב איתך את הברכה המושלמת ואפילו ליצור תמונות או שירים!\n\nאיזה סגנון ברכה בא לך?\n1️⃣ קצרה ומרגשת (בריאות, רפואה, נחת)\n2️⃣ חזקה ומעצימה (לשימי הגיבור שמנצח הכל)\n3️⃣ מצחיקה ואישית (זיכרון מתוק)\n\nפשוט תכתוב לי כאן למטה מה הכיוון, ואני אנסח לך 3 הצעות מדהימות לבחירה! 👇`
+            }];
+          }
+          return prev;
+        });
+      }
+    };
+    
     window.addEventListener("author-name-updated", handleNameUpdate);
     return () => window.removeEventListener("author-name-updated", handleNameUpdate);
   }, []);
@@ -166,6 +192,16 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
   };
 
   const handleGenerateMedia = async (cta: NonNullable<Message['ctas']>[0], botMessageText: string) => {
+    if (cta.media_type === "reply") {
+      setInput(cta.prompt);
+      // Auto focus the input area
+      setTimeout(() => {
+        const ta = document.querySelector('textarea') as HTMLTextAreaElement;
+        if (ta) ta.focus();
+      }, 0);
+      return;
+    }
+
     if (!authorName.trim()) {
       alert("אנא הזינו את שמכם בתיבה למעלה לפני שניצור את היצירה!");
       return;
