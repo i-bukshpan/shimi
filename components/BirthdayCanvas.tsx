@@ -182,24 +182,9 @@ export default function BirthdayCanvas() {
       initialNodes = [
         ...initialNodes,
         ...creationsData.map((c) => {
-          // Adjust initial positions so they don't overlap Shimi
+          // Load positions
           let px = c.position_x || Math.random() * 800;
           let py = c.position_y || Math.random() * 800;
-          const shimiX = window.innerWidth / 2 - 160;
-          const shimiY = 150;
-          
-          const boxLeft = shimiX - 450;
-          const boxRight = shimiX + 320;
-          const boxTop = shimiY - 200;
-          const boxBottom = shimiY + 500;
-
-          if (px > boxLeft && px < boxRight && py > boxTop && py < boxBottom) {
-             const side = Math.floor(Math.random() * 4);
-             if (side === 0) py = boxTop - 100 - Math.random() * 50; 
-             else if (side === 1) py = boxBottom + 100 + Math.random() * 50; 
-             else if (side === 2) px = boxLeft - 450 - Math.random() * 100; 
-             else px = boxRight + 100 + Math.random() * 100; 
-          }
 
           return {
             id: c.id,
@@ -251,30 +236,7 @@ export default function BirthdayCanvas() {
 
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      const shimiX = window.innerWidth / 2 - 160;
-      const shimiY = 150;
-      const boxLeft = shimiX - 450;
-      const boxRight = shimiX + 320;
-      const boxTop = shimiY - 200;
-      const boxBottom = shimiY + 500;
-
       const modifiedChanges = changes.map(change => {
-        // Only trigger the snap-out when the user RELEASES the drag
-        if (change.type === 'position' && change.dragging === false && change.position && change.id !== 'shimi-main-node') {
-          let px = change.position.x;
-          let py = change.position.y;
-          
-          if (px > boxLeft && px < boxRight && py > boxTop && py < boxBottom) {
-             const side = Math.floor(Math.random() * 4);
-             if (side === 0) py = boxTop - 100 - Math.random() * 50; 
-             else if (side === 1) py = boxBottom + 100 + Math.random() * 50; 
-             else if (side === 2) px = boxLeft - 450 - Math.random() * 100; 
-             else px = boxRight + 100 + Math.random() * 100; 
-             
-             change.position.x = px;
-             change.position.y = py;
-          }
-        }
         return change;
       });
 

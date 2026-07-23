@@ -44,7 +44,7 @@ export default function Sidebar() {
             <div className="flex flex-col gap-1">
               <h2 className="font-black text-xl text-amber-900 drop-shadow-sm flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-amber-500" />
-                העוזר למסיבה 🎉
+                יום הולדת 9 לשימי 🎉
               </h2>
             </div>
             
@@ -78,7 +78,7 @@ export default function Sidebar() {
               : 'bg-transparent border-transparent text-amber-700/50 hover:bg-amber-50'
             }`}
           >
-            עוזר AI
+            ברכה בAI
           </button>
           <button 
             onClick={() => setActiveTab('manual')}

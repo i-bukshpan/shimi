@@ -104,11 +104,11 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
   };
 
   // Determine card border/shadow based on decoration
-  let cardStyle = "border-amber-200 shadow-xl";
-  if (decoration === 'cake') cardStyle = "border-pink-300 shadow-[0_10px_40px_rgba(244,114,182,0.3)]";
-  if (decoration === 'candles') cardStyle = "border-orange-300 shadow-[0_0_30px_rgba(251,146,60,0.4)]";
-  if (decoration === 'balloons') cardStyle = "border-sky-300 shadow-[0_10px_40px_rgba(56,189,248,0.2)]";
-  if (decoration === 'confetti') cardStyle = "border-purple-300 shadow-[0_10px_40px_rgba(168,85,247,0.3)]";
+  let cardStyle = "border-amber-200 shadow-md";
+  if (decoration === 'cake') cardStyle = "border-pink-300 shadow-md";
+  if (decoration === 'candles') cardStyle = "border-orange-300 shadow-md";
+  if (decoration === 'balloons') cardStyle = "border-sky-300 shadow-md";
+  if (decoration === 'confetti') cardStyle = "border-purple-300 shadow-md";
 
   const hasMedia = (c.media_type === 'image' || c.media_type === 'video') && c.generated_media_url;
   const widthClass = hasMedia ? "w-[450px]" : "w-80";
@@ -165,7 +165,14 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
         )}
 
         <div className="flex-1 mb-4">
-          <h3 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-l from-amber-600 to-orange-500 mb-2">{c.author}</h3>
+          <div className="flex justify-between items-start mb-2">
+            <h3 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-l from-amber-600 to-orange-500">{c.author}</h3>
+            {c.created_at && (
+              <span className="text-xs text-stone-400 font-medium whitespace-nowrap mt-1 opacity-70">
+                {new Date(c.created_at).toLocaleDateString('he-IL', { day: 'numeric', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })}
+              </span>
+            )}
+          </div>
           {c.raw_blessing && c.raw_blessing.trim().length > 0 && (
             <p className="text-stone-700 font-medium leading-relaxed whitespace-pre-wrap bg-stone-50 p-3 rounded-xl border border-stone-100">{c.raw_blessing}</p>
           )}
@@ -194,7 +201,7 @@ export default memo(function CardNode({ id, data, isConnectable }: NodeProps) {
               e.stopPropagation();
               window.dispatchEvent(new CustomEvent('open-uploader', { detail: { parentId: c.id } }));
             }}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-3 py-2 rounded-lg font-bold shadow-md hover:scale-[1.02] transition-transform w-full"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-2 rounded-lg font-bold shadow-md hover:scale-[1.02] transition-transform w-full"
           >
             <span>🚀 הוסף חוויה/תמונה מחוברת</span>
           </button>
