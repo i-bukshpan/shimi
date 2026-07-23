@@ -50,6 +50,13 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
   }, [messages, isOpen]);
 
   useEffect(() => {
+    setAuthorName(localStorage.getItem("shimi_author_name") || "");
+    const handleNameUpdate = () => setAuthorName(localStorage.getItem("shimi_author_name") || "");
+    window.addEventListener("author-name-updated", handleNameUpdate);
+    return () => window.removeEventListener("author-name-updated", handleNameUpdate);
+  }, []);
+
+  useEffect(() => {
     const handleReply = (e: any) => {
       const creation = e.detail;
       setIsOpen(true);
@@ -226,23 +233,14 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
               : "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col bg-[#FCF8F2] rounded-2xl shadow-2xl border border-[#ECC94B]/30 h-[80vh] max-h-[700px] w-[calc(100%-32px)] sm:w-[450px] overflow-hidden"
             }
           >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 border-b border-amber-200 flex items-center justify-end shrink-0">
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="שם (דודה שרה)"
-                  value={authorName}
-                  onChange={(e) => setAuthorName(e.target.value)}
-                  className="text-sm border border-amber-300 rounded-md px-2 py-1.5 outline-none focus:ring-2 focus:ring-amber-500 bg-white/70 w-32 shadow-inner"
-                />
-                {!inline && (
-                  <button onClick={() => setIsOpen(false)} className="p-1.5 text-amber-900 bg-amber-200/50 hover:bg-amber-300 rounded-md transition-colors">
-                    <X className="w-5 h-5" />
-                  </button>
-                )}
+            {/* Header (Only for close button when floating) */}
+            {!inline && (
+              <div className="absolute top-3 left-3 z-10">
+                <button onClick={() => setIsOpen(false)} className="p-1.5 text-stone-500 bg-white/80 backdrop-blur-md hover:bg-stone-100 rounded-full transition-colors shadow-sm">
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-            </div>
+            )}
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#FAF6F0]/50 pb-32">

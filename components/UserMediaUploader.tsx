@@ -32,8 +32,9 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
 
   useEffect(() => {
     // Load saved author name
-    const savedName = localStorage.getItem("shimi_author_name");
-    if (savedName) setAuthorName(savedName);
+    setAuthorName(localStorage.getItem("shimi_author_name") || "");
+    const handleNameUpdate = () => setAuthorName(localStorage.getItem("shimi_author_name") || "");
+    window.addEventListener("author-name-updated", handleNameUpdate);
 
     // Listen for custom event to open uploader (e.g. for replying)
     const handleOpenUploader = (e: CustomEvent) => {
@@ -46,7 +47,10 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
     };
 
     window.addEventListener("open-uploader" as any, handleOpenUploader);
-    return () => window.removeEventListener("open-uploader" as any, handleOpenUploader);
+    return () => {
+      window.removeEventListener("open-uploader" as any, handleOpenUploader);
+      window.removeEventListener("author-name-updated", handleNameUpdate);
+    };
   }, [inline]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: "image" | "video") => {
@@ -200,17 +204,17 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
   // Render content
   const content = (
     <div className={`bg-white shadow-2xl overflow-hidden relative flex flex-col ${inline ? 'w-full h-full' : 'rounded-3xl w-full max-w-md max-h-[90vh]'}`}>
-      {/* Header */}
-      <div className="bg-gradient-to-r from-rose-100 to-pink-100 p-4 border-b border-rose-200 flex items-center justify-end shrink-0">
-        {!inline && (
+      {/* Header (Only for close button when floating) */}
+      {!inline && (
+        <div className="absolute top-3 left-3 z-10">
           <button 
             onClick={() => { setIsOpen(false); resetState(); }}
-            className="p-1.5 text-rose-900 bg-rose-200/50 hover:bg-rose-300 rounded-full transition-colors"
+            className="p-1.5 text-stone-500 bg-white/80 backdrop-blur-md hover:bg-stone-100 rounded-full transition-colors shadow-sm"
           >
             <X className="w-5 h-5" />
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Body */}
       <div className="p-6 flex-1 overflow-y-auto space-y-6 flex flex-col">
@@ -224,16 +228,7 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
           </div>
         ) : (
           <>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="השם שלך (דודה שרה)"
-                value={authorName}
-                onChange={(e) => setAuthorName(e.target.value)}
-                className="w-full border-2 border-stone-200 rounded-xl px-4 py-3 outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-200 transition-all font-medium text-lg text-stone-800"
-                dir="rtl"
-              />
-
+            <div className="space-y-4 pt-4">
               {!file && (
                 <>
                   <div className="relative">
