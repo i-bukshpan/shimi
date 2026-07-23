@@ -11,10 +11,11 @@ export default function AboutModal() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-[80px] left-6 z-[40] bg-white/80 backdrop-blur-md text-stone-600 p-3 rounded-full shadow-md hover:bg-stone-100 hover:scale-105 transition-all border border-stone-200"
+        className="fixed bottom-[90px] left-4 sm:bottom-auto sm:top-[80px] sm:left-6 z-[40] bg-gradient-to-r from-amber-400 to-orange-400 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-white flex items-center gap-2 animate-bounce"
         title="מה עושים כאן?"
       >
-        <Info className="w-6 h-6" />
+        <Info className="w-5 h-5" />
+        <span className="font-bold text-sm">מה עושים פה?</span>
       </button>
 
       <AnimatePresence>
