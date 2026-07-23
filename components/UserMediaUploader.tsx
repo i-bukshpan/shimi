@@ -201,11 +201,7 @@ export default function UserMediaUploader({ inline = false }: { inline?: boolean
   const content = (
     <div className={`bg-white shadow-2xl overflow-hidden relative flex flex-col ${inline ? 'w-full h-full' : 'rounded-3xl w-full max-w-md max-h-[90vh]'}`}>
       {/* Header */}
-      <div className="bg-gradient-to-r from-rose-100 to-pink-100 p-4 border-b border-rose-200 flex items-center justify-between shrink-0">
-        <h2 className="font-bold text-xl text-rose-900 flex items-center gap-2">
-          <ImagePlus className="w-5 h-5 text-rose-600" />
-          {parentId ? "כתיבת תגובה" : "הוספת זיכרון משלי"}
-        </h2>
+      <div className="bg-gradient-to-r from-rose-100 to-pink-100 p-4 border-b border-rose-200 flex items-center justify-end shrink-0">
         {!inline && (
           <button 
             onClick={() => { setIsOpen(false); resetState(); }}

@@ -88,7 +88,7 @@ export default function Sidebar() {
               : 'bg-transparent border-transparent text-amber-700/50 hover:bg-amber-50'
             }`}
           >
-            ידני / קבצים
+            ברכה ידנית
           </button>
         </div>
       </div>

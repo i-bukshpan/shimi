@@ -227,11 +227,7 @@ export default function ChatWindow({ inline = false }: { inline?: boolean }) {
             }
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 border-b border-amber-200 flex items-center justify-between shrink-0">
-              <h2 className="font-bold text-xl text-amber-900 flex items-center gap-2 drop-shadow-sm">
-                <Sparkles className="w-5 h-5 text-amber-600" />
-                העוזר למסיבה
-              </h2>
+            <div className="bg-gradient-to-r from-amber-100 to-orange-100 p-4 border-b border-amber-200 flex items-center justify-end shrink-0">
               <div className="flex items-center gap-2">
                 <input
                   type="text"
