@@ -14,10 +14,10 @@ export default function Sidebar() {
       {/* Mobile Toggle Button (Floating) */}
       <button 
         onClick={() => setIsOpen(true)}
-        className={`md:hidden fixed bottom-6 right-6 z-40 bg-gradient-to-r from-amber-400 to-amber-500 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95 ${isOpen ? 'hidden' : 'flex'} items-center justify-center gap-2`}
+        className={`md:hidden fixed bottom-6 right-6 z-40 bg-gradient-to-r from-amber-400 to-amber-500 text-white px-4 py-3 rounded-full shadow-2xl transition-transform hover:scale-105 active:scale-95 ${isOpen ? 'hidden' : 'flex'} items-center justify-center gap-2`}
       >
-        <MessageCircle className="w-6 h-6 fill-current" />
-        <span className="font-bold">פתח עוזר</span>
+        <MessageCircle className="w-5 h-5 fill-current" />
+        <span className="font-bold text-sm">פתח עוזר</span>
       </button>
 
       {/* Mobile Overlay */}

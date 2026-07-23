@@ -11,7 +11,7 @@ export default memo(function ShimiNode() {
           className="relative w-80 h-80 rounded-full object-cover border-4 border-amber-300 bg-white"
         />
       </div>
-      <h1 className="mt-6 text-7xl font-black text-black tracking-wider">
+      <h1 className="mt-6 text-7xl font-black text-black tracking-wider whitespace-nowrap">
         מזל טוב שימי!
       </h1>
       
