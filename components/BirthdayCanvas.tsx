@@ -324,7 +324,7 @@ export default function BirthdayCanvas() {
           >
             <Background color="#ECC94B" gap={24} size={2} style={{ opacity: 0.4 }} />
             <Controls 
-              className="bg-white/90 backdrop-blur-md shadow-2xl border border-stone-200/50 rounded-2xl overflow-hidden !bottom-8 !left-8 flex flex-col gap-1 p-1"
+              className="bg-white/90 backdrop-blur-md shadow-2xl border border-stone-200/50 rounded-2xl overflow-hidden !bottom-[150px] sm:!bottom-24 !left-6 flex flex-col gap-1 p-1"
               showInteractive={false}
             />
           </ReactFlow>
