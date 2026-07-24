@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Info, X, Heart, Image as ImageIcon, Video, Mic, Sparkles } from "lucide-react";
 
@@ -8,7 +8,7 @@ export default function AboutModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
+    <React.Fragment>
       <button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 left-6 z-[40] bg-gradient-to-r from-amber-400 to-orange-400 text-white px-4 py-3 rounded-full shadow-2xl hover:scale-105 transition-all flex items-center gap-2 animate-bounce"
@@ -99,6 +99,6 @@ export default function AboutModal() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </React.Fragment>
   );
 }
